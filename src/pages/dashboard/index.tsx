@@ -1,30 +1,31 @@
 import { Layout } from '@/components/custom/layout'
-import { Button } from '@/components/custom/button'
+// import { Button } from '@/components/custom/button'
 import {
   Card,
   CardContent,
-  CardDescription,
+  // CardDescription,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { Search } from '@/components/search'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+// import { Search } from '@/components/search'
+import { Tabs, TabsContent } from '@/components/ui/tabs'
 import ThemeSwitch from '@/components/theme-switch'
-import { TopNav } from '@/components/top-nav'
-import { UserNav } from '@/components/user-nav'
-import { RecentSales } from './components/recent-sales'
+// import { TopNav } from '@/components/top-nav'
+// import { UserNav } from '@/components/user-nav'
+// import { RecentSales } from './components/recent-sales'
 import { Overview } from './components/overview'
+import PieChartStats from './components/pieChart'
 
 export default function Dashboard() {
   return (
     <Layout>
       {/* ===== Top Heading ===== */}
       <Layout.Header>
-        <TopNav links={topNav} />
+        {/* <TopNav links={topNav} /> */}
         <div className='ml-auto flex items-center space-x-4'>
-          <Search />
+          {/* <Search /> */}
           <ThemeSwitch />
-          <UserNav />
+          {/* <UserNav /> */}
         </div>
       </Layout.Header>
 
@@ -32,29 +33,30 @@ export default function Dashboard() {
       <Layout.Body>
         <div className='mb-2 flex items-center justify-between space-y-2'>
           <h1 className='text-2xl font-bold tracking-tight'>Dashboard</h1>
-          <div className='flex items-center space-x-2'>
+          {/* <div className='flex items-center space-x-2'>
             <Button>Download</Button>
-          </div>
+          </div> */}
         </div>
         <Tabs
           orientation='vertical'
           defaultValue='overview'
           className='space-y-4'
         >
-          <div className='w-full overflow-x-auto pb-2'>
+          {/* <div className='w-full overflow-x-auto pb-2'>
             <TabsList>
               <TabsTrigger value='overview'>Overview</TabsTrigger>
               <TabsTrigger value='analytics'>Analytics</TabsTrigger>
               <TabsTrigger value='reports'>Reports</TabsTrigger>
               <TabsTrigger value='notifications'>Notifications</TabsTrigger>
             </TabsList>
-          </div>
+          </div> */}
           <TabsContent value='overview' className='space-y-4'>
+            {/* Cards */}
             <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                   <CardTitle className='text-sm font-medium'>
-                    Total Revenue
+                    Total Rows Corrected
                   </CardTitle>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -70,16 +72,16 @@ export default function Dashboard() {
                   </svg>
                 </CardHeader>
                 <CardContent>
-                  <div className='text-2xl font-bold'>$45,231.89</div>
+                  <div className='text-2xl font-bold'>10,231,089</div>
                   <p className='text-xs text-muted-foreground'>
-                    +20.1% from last month
+                    +5.1% from yesterday
                   </p>
                 </CardContent>
               </Card>
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                   <CardTitle className='text-sm font-medium'>
-                    Subscriptions
+                    Rows Corrected Today
                   </CardTitle>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -99,13 +101,15 @@ export default function Dashboard() {
                 <CardContent>
                   <div className='text-2xl font-bold'>+2350</div>
                   <p className='text-xs text-muted-foreground'>
-                    +180.1% from last month
+                    +1.1% from yesterday
                   </p>
                 </CardContent>
               </Card>
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                  <CardTitle className='text-sm font-medium'>Sales</CardTitle>
+                  <CardTitle className='text-sm font-medium'>
+                    Total Rows Translated by LLM
+                  </CardTitle>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     viewBox='0 0 24 24'
@@ -130,7 +134,7 @@ export default function Dashboard() {
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                   <CardTitle className='text-sm font-medium'>
-                    Active Now
+                    Rows Translated by LLM Today
                   </CardTitle>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -159,13 +163,23 @@ export default function Dashboard() {
                 <CardHeader>
                   <CardTitle>Overview</CardTitle>
                 </CardHeader>
-                <CardContent className='pl-2'>
+                <CardContent className='flex items-center justify-center pl-2'>
                   <Overview />
                 </CardContent>
               </Card>
 
-              {/* RecentSales */}
+              {/* Pie chart */}
               <Card className='col-span-1 lg:col-span-3'>
+                <CardHeader>
+                  <CardTitle>Rows Corrected Today</CardTitle>
+                </CardHeader>
+                <CardContent className='flex items-center justify-center pl-2'>
+                  <PieChartStats />
+                </CardContent>
+              </Card>
+
+              {/* RecentSales */}
+              {/* <Card className='col-span-1 lg:col-span-3'>
                 <CardHeader>
                   <CardTitle>Recent Sales</CardTitle>
                   <CardDescription>
@@ -175,7 +189,7 @@ export default function Dashboard() {
                 <CardContent>
                   <RecentSales />
                 </CardContent>
-              </Card>
+              </Card> */}
             </div>
           </TabsContent>
         </Tabs>
@@ -184,25 +198,25 @@ export default function Dashboard() {
   )
 }
 
-const topNav = [
-  {
-    title: 'Overview',
-    href: 'dashboard/overview',
-    isActive: true,
-  },
-  {
-    title: 'Customers',
-    href: 'dashboard/customers',
-    isActive: false,
-  },
-  {
-    title: 'Products',
-    href: 'dashboard/products',
-    isActive: false,
-  },
-  {
-    title: 'Settings',
-    href: 'dashboard/settings',
-    isActive: false,
-  },
-]
+// const topNav = [
+//   {
+//     title: 'Overview',
+//     href: 'dashboard/overview',
+//     isActive: true,
+//   },
+//   {
+//     title: 'Customers',
+//     href: 'dashboard/customers',
+//     isActive: false,
+//   },
+//   {
+//     title: 'Products',
+//     href: 'dashboard/products',
+//     isActive: false,
+//   },
+//   {
+//     title: 'Settings',
+//     href: 'dashboard/settings',
+//     isActive: false,
+//   },
+// ]
