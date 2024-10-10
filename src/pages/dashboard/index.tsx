@@ -1,31 +1,26 @@
 import { Layout } from '@/components/custom/layout'
-// import { Button } from '@/components/custom/button'
-import {
-  Card,
-  CardContent,
-  // CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-// import { Search } from '@/components/search'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent } from '@/components/ui/tabs'
 import ThemeSwitch from '@/components/theme-switch'
-// import { TopNav } from '@/components/top-nav'
-// import { UserNav } from '@/components/user-nav'
-// import { RecentSales } from './components/recent-sales'
-import { Overview } from './components/overview'
+
+import BarChartStats from './components/overview'
 import PieChartStats from './components/pieChart'
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 export default function Dashboard() {
   return (
     <Layout>
       {/* ===== Top Heading ===== */}
       <Layout.Header>
-        {/* <TopNav links={topNav} /> */}
         <div className='ml-auto flex items-center space-x-4'>
-          {/* <Search /> */}
           <ThemeSwitch />
-          {/* <UserNav /> */}
         </div>
       </Layout.Header>
 
@@ -33,23 +28,12 @@ export default function Dashboard() {
       <Layout.Body>
         <div className='mb-2 flex items-center justify-between space-y-2'>
           <h1 className='text-2xl font-bold tracking-tight'>Dashboard</h1>
-          {/* <div className='flex items-center space-x-2'>
-            <Button>Download</Button>
-          </div> */}
         </div>
         <Tabs
           orientation='vertical'
           defaultValue='overview'
           className='space-y-4'
         >
-          {/* <div className='w-full overflow-x-auto pb-2'>
-            <TabsList>
-              <TabsTrigger value='overview'>Overview</TabsTrigger>
-              <TabsTrigger value='analytics'>Analytics</TabsTrigger>
-              <TabsTrigger value='reports'>Reports</TabsTrigger>
-              <TabsTrigger value='notifications'>Notifications</TabsTrigger>
-            </TabsList>
-          </div> */}
           <TabsContent value='overview' className='space-y-4'>
             {/* Cards */}
             <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
@@ -160,11 +144,24 @@ export default function Dashboard() {
             <div className='grid grid-cols-1 gap-4 lg:grid-cols-7'>
               {/* Overview: Bar chart */}
               <Card className='col-span-1 lg:col-span-4'>
-                <CardHeader>
-                  <CardTitle>Overview</CardTitle>
+                <CardHeader className='flex flex-row items-center justify-between'>
+                  <CardTitle>User Overview</CardTitle>
+                  <Select>
+                    <SelectTrigger className='w-[180px]'>
+                      <SelectValue placeholder='User' />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value='Moez'>Moez</SelectItem>
+                      <SelectItem value='Borhen'>Borhen</SelectItem>
+                      <SelectItem value='Oussema'>Oussema</SelectItem>
+                      <SelectItem value='Zahra'>Zahra</SelectItem>
+                      <SelectItem value='Nour'>Nour</SelectItem>
+                      <SelectItem value='Seif'>Seif</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </CardHeader>
-                <CardContent className='flex items-center justify-center pl-2'>
-                  <Overview />
+                <CardContent className='flex items-center justify-center  pl-2'>
+                  <BarChartStats />
                 </CardContent>
               </Card>
 
@@ -197,26 +194,3 @@ export default function Dashboard() {
     </Layout>
   )
 }
-
-// const topNav = [
-//   {
-//     title: 'Overview',
-//     href: 'dashboard/overview',
-//     isActive: true,
-//   },
-//   {
-//     title: 'Customers',
-//     href: 'dashboard/customers',
-//     isActive: false,
-//   },
-//   {
-//     title: 'Products',
-//     href: 'dashboard/products',
-//     isActive: false,
-//   },
-//   {
-//     title: 'Settings',
-//     href: 'dashboard/settings',
-//     isActive: false,
-//   },
-// ]

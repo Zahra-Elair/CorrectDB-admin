@@ -1,81 +1,81 @@
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts'
+// import "./styles.css";
+// import React from "react";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  // Legend,
+  Rectangle,
+} from 'recharts'
 
 const data = [
   {
-    name: 'Jan',
-    total: Math.floor(Math.random() * 5000) + 1000,
+    date: '10/10/24',
+    LLM: 4000,
+    Manual: 2400,
   },
   {
-    name: 'Feb',
-    total: Math.floor(Math.random() * 5000) + 1000,
+    date: '11/10/24',
+    LLM: 3000,
+    Manual: 1398,
   },
   {
-    name: 'Mar',
-    total: Math.floor(Math.random() * 5000) + 1000,
+    date: '12/10/24',
+    LLM: 2000,
+    Manual: 9800,
   },
   {
-    name: 'Apr',
-    total: Math.floor(Math.random() * 5000) + 1000,
+    date: '13/10/24',
+    LLM: 2780,
+    Manual: 3908,
   },
   {
-    name: 'May',
-    total: Math.floor(Math.random() * 5000) + 1000,
+    date: '14/10/24',
+    LLM: 1890,
+    Manual: 4800,
   },
   {
-    name: 'Jun',
-    total: Math.floor(Math.random() * 5000) + 1000,
+    date: '15/10/24',
+    LLM: 2390,
+    Manual: 3800,
   },
   {
-    name: 'Jul',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Aug',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Sep',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Oct',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Nov',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Dec',
-    total: Math.floor(Math.random() * 5000) + 1000,
+    date: '16/10/24',
+    LLM: 3490,
+    Manual: 4300,
   },
 ]
 
-export function Overview() {
+export default function BarChartStats() {
   return (
-    <ResponsiveContainer width='100%' height={350}>
-      <BarChart data={data}>
-        <XAxis
-          dataKey='name'
-          stroke='#888888'
-          fontSize={12}
-          tickLine={false}
-          axisLine={false}
-        />
-        <YAxis
-          stroke='#888888'
-          fontSize={12}
-          tickLine={false}
-          axisLine={false}
-          tickFormatter={(value) => `$${value}`}
-        />
-        <Bar
-          dataKey='total'
-          fill='currentColor'
-          radius={[4, 4, 0, 0]}
-          className='fill-primary'
-        />
-      </BarChart>
-    </ResponsiveContainer>
+    <BarChart
+      width={800}
+      height={400}
+      data={data}
+      margin={{
+        top: 5,
+        right: 30,
+        left: 20,
+        bottom: 5,
+      }}
+    >
+      <CartesianGrid strokeDasharray='3 3' />
+      <XAxis dataKey='date' />
+      <YAxis />
+      <Tooltip />
+      <Bar
+        dataKey='LLM'
+        fill='#F95454'
+        activeBar={<Rectangle fill='pink' stroke='blue' />}
+      />
+      <Bar
+        dataKey='Manual'
+        fill='#0D92F4'
+        activeBar={<Rectangle fill='gold' stroke='purple' />}
+      />
+    </BarChart>
   )
 }
