@@ -4,7 +4,7 @@ import { Tabs, TabsContent } from '@/components/ui/tabs'
 import ThemeSwitch from '@/components/theme-switch'
 
 import BarChartStats from './components/overview'
-import PieChartStats from './components/pieChart'
+import PieChartStats from './components/pieChart2'
 
 import {
   Select,
@@ -19,16 +19,14 @@ export default function Dashboard() {
     <Layout>
       {/* ===== Top Heading ===== */}
       <Layout.Header>
-        <div className='ml-auto flex items-center space-x-4'>
+        <div className='ml-auto flex w-full items-center justify-between space-x-4'>
+          <h1 className='  text-2xl font-bold tracking-tight'>Dashboard</h1>
           <ThemeSwitch />
         </div>
       </Layout.Header>
 
       {/* ===== Main ===== */}
       <Layout.Body>
-        <div className='mb-2 flex items-center justify-between space-y-2'>
-          <h1 className='text-2xl font-bold tracking-tight'>Dashboard</h1>
-        </div>
         <Tabs
           orientation='vertical'
           defaultValue='overview'
@@ -143,7 +141,7 @@ export default function Dashboard() {
             </div>
             <div className='grid grid-cols-1 gap-4 lg:grid-cols-7'>
               {/* Overview: Bar chart */}
-              <Card className='col-span-1 lg:col-span-4'>
+              <Card className='col-span-1  lg:col-span-4'>
                 <CardHeader className='flex flex-row items-center justify-between'>
                   <CardTitle>User Overview</CardTitle>
                   <Select>
@@ -166,14 +164,17 @@ export default function Dashboard() {
               </Card>
 
               {/* Pie chart */}
-              <Card className='col-span-1 lg:col-span-3'>
+              <div className='col-span-1 lg:col-span-3'>
+                <PieChartStats />
+              </div>
+              {/* <Card className='col-span-1 lg:col-span-3'>
                 <CardHeader>
                   <CardTitle>Rows Corrected Today</CardTitle>
                 </CardHeader>
                 <CardContent className='flex items-center justify-center pl-2'>
                   <PieChartStats />
                 </CardContent>
-              </Card>
+              </Card> */}
 
               {/* RecentSales */}
               {/* <Card className='col-span-1 lg:col-span-3'>
