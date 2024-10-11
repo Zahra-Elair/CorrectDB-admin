@@ -9,6 +9,7 @@ import {
   Tooltip,
   // Legend,
   Rectangle,
+  ResponsiveContainer,
 } from 'recharts'
 
 interface Resp {
@@ -82,7 +83,7 @@ export function Overview(myData:myProps) {
         activeBar={<Rectangle fill='pink' stroke='blue' />}
       />
       <Bar
-        dataKey='TotalB'
+        dataKey='totalB'
         fill='#0D92F4'
         activeBar={<Rectangle fill='gold' stroke='purple' />}
       />

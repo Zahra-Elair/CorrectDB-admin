@@ -2,7 +2,7 @@ import { Layout } from '@/components/custom/layout'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent } from '@/components/ui/tabs'
 import ThemeSwitch from '@/components/theme-switch'
-import BarChartStats from './components/overview'
+// import BarChartStats from './components/overview'
 import PieChartStats from './components/pieChart2'
 import {
   Select,
@@ -15,7 +15,7 @@ import {
 // import { UserNav } from '@/components/user-nav'
 // import { RecentSales } from './components/recent-sales'
 import { Overview } from './components/overview'
-import PieChartStats from './components/pieChart'
+// import PieChartStats from './components/pieChart'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 interface Resp {
@@ -226,7 +226,7 @@ setfilteredData(newFilteredData);
 
               <Card className='col-span-1 lg:col-span-3'>
                 <CardContent className='flex items-center justify-center pl-2'>
-                  <PieChartStats myData={data} start={start} end={end} />
+                  <PieChartStats myData={data} start={start} end={end}  />
                 </CardContent>
               </Card>
 
