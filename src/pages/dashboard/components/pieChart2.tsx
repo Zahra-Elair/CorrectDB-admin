@@ -1,14 +1,14 @@
 'use client'
 
 import * as React from 'react'
-import { TrendingUp } from 'lucide-react'
+
 import { Label, Pie, PieChart, Cell, Legend } from 'recharts'
 
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
+
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
@@ -18,15 +18,8 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart'
+import { useState } from 'react'
 
-const data = [
-  { name: 'Moez', value: 400 },
-  { name: 'Borhen', value: 200 },
-  { name: 'Oussema', value: 400 },
-  { name: 'Zahra', value: 400 },
-  { name: 'Nour', value: 600 },
-  { name: 'Seif', value: 300 },
-]
 
 const COLORS = [
   '#0088FE',
@@ -67,11 +60,53 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export default function PieChartStats() {
-  const totalValue = React.useMemo(() => {
-    return data.reduce((acc, curr) => acc + curr.value, 0)
-  }, [])
+interface Resp {
+  user:string,
+  date:string,
+  english:string,
+  arabish:string,
+  arabic:string,
+  id:number
+  
+}
+interface DataType{
+  myData:Resp[],
+  start:string,
+  end:string
+}
 
+export default function PieChartStats(myData:DataType) {
+const [filteredData, setFilteredData] = useState<Resp[]>([])
+  const [pieData, setPieData] = useState<{name:string,value:number}[]>( [ { name: 'Moez', value: 0 },
+    { name: 'Borhen', value: 0 },
+    { name: 'Oussema', value: 0 },
+    { name: 'Zahra', value: 0 },
+    { name: 'Nour', value: 0 },
+    { name: 'Seif', value: 0 }])
+const counterFunc = () =>{
+  
+  const startDate = new Date(myData.start);
+  const endDate = new Date(myData.end); 
+  const filteredData = myData.myData.filter(entry => {
+    const entryDate = new Date(entry.date.split('-').reverse().join('-'));
+return entryDate >= startDate && entryDate <= endDate;
+});
+setFilteredData(filteredData)
+
+const countOussema = filteredData.filter(entry => entry.user === 'oussema').length;
+const countzahra = filteredData.filter(entry => entry.user === 'zahra').length;
+const countmoez = filteredData.filter(entry => entry.user === 'moez').length;
+const countborhen = filteredData.filter(entry => entry.user === 'borhen').length;
+const countnour = filteredData.filter(entry => entry.user === 'nour').length;
+const countsalah = filteredData.filter(entry => entry.user === 'salah').length;
+setPieData([{name:"oussema",value:countOussema},{name:"moez",value:countmoez},{name:"zahra",value:countzahra},{name:"borhen",value:countborhen},{name:"salah",value:countsalah},{name:"nour",value:countnour}])
+}
+React.useEffect(() => {
+console.log(myData.myData)
+counterFunc();
+}, [myData.myData])
+  
+  
   return (
     <Card className='flex h-full w-full flex-col '>
       <CardHeader className='items-center pb-0'>
@@ -88,7 +123,7 @@ export default function PieChartStats() {
               content={<ChartTooltipContent hideLabel />}
             />
             <Pie
-              data={data}
+              data={pieData}
               dataKey='value'
               nameKey='name'
               innerRadius={100}
@@ -96,7 +131,7 @@ export default function PieChartStats() {
               strokeWidth={5}
               paddingAngle={3}
             >
-              {data.map((entry, index) => (
+              {pieData.map((entry, index) => (
                 <Cell
                   key={`cell-${index}`}
                   fill={COLORS[index % COLORS.length]}
@@ -117,7 +152,7 @@ export default function PieChartStats() {
                           y={viewBox.cy}
                           className='fill-foreground text-3xl font-bold'
                         >
-                          {totalValue.toLocaleString()}
+                         {filteredData.length}
                         </tspan>
                         <tspan
                           x={viewBox.cx}
