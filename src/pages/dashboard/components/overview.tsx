@@ -11,47 +11,57 @@ import {
   Rectangle,
 } from 'recharts'
 
-const data = [
-  {
-    date: '10/10/24',
-    LLM: 4000,
-    Manual: 2400,
-  },
-  {
-    date: '11/10/24',
-    LLM: 3000,
-    Manual: 1398,
-  },
-  {
-    date: '12/10/24',
-    LLM: 2000,
-    Manual: 9800,
-  },
-  {
-    date: '13/10/24',
-    LLM: 2780,
-    Manual: 3908,
-  },
-  {
-    date: '14/10/24',
-    LLM: 1890,
-    Manual: 4800,
-  },
-  {
-    date: '15/10/24',
-    LLM: 2390,
-    Manual: 3800,
-  },
-  {
-    date: '16/10/24',
-    LLM: 3490,
-    Manual: 4300,
-  },
-]
+interface Resp {
+  user:string,
+  date:string,
+  english:string,
+  arabish:string,
+  arabic:string,
+  id:number
+  
+}
+interface myProps{
+  myData: Resp[]
+}
 
-export default function BarChartStats() {
+export function Overview(myData:myProps) {
+  const data = [
+    {
+      name: 'Moez',
+      totalA: myData.myData.filter(entry => entry.user === 'moez').length,
+      totalB: myData.myData.filter(entry => entry.user === 'moez').length - 15 * Math.random()
+    },
+    {
+      name: 'Oussema',
+      totalA: myData.myData.filter(entry => entry.user === 'oussema').length,
+      totalB: myData.myData.filter(entry => entry.user === 'oussema').length - 15 * Math.random()
+      ,
+    },
+    {
+      name: 'Nour',
+      totalA: myData.myData.filter(entry => entry.user === 'nour').length,
+      totalB: myData.myData.filter(entry => entry.user === 'nour').length - 15 * Math.random(),
+    },
+    {
+      name: 'Salah',
+      totalA: myData.myData.filter(entry => entry.user === 'salah').length,
+      totalB: myData.myData.filter(entry => entry.user === 'salah').length - 15 * Math.random(),
+    },
+    {
+      name: 'Zahra',
+      totalA: myData.myData.filter(entry => entry.user === 'zahra').length,
+      totalB: myData.myData.filter(entry => entry.user === 'zahra').length - 15 * Math.random(),
+    },
+    {
+      name: 'Borhen',
+      totalA: myData.myData.filter(entry => entry.user === 'borhen').length,
+      totalB: myData.myData.filter(entry => entry.user === 'borhen').length - 15 * Math.random(),
+    },
+    
+  ]
   return (
-    <BarChart
+    <ResponsiveContainer width='100%' height={350}>
+      <BarChart
       width={800}
       height={400}
       data={data}
@@ -67,15 +77,16 @@ export default function BarChartStats() {
       <YAxis />
       <Tooltip />
       <Bar
-        dataKey='LLM'
+        dataKey='totalA'
         fill='#F95454'
         activeBar={<Rectangle fill='pink' stroke='blue' />}
       />
       <Bar
-        dataKey='Manual'
+        dataKey='TotalB'
         fill='#0D92F4'
         activeBar={<Rectangle fill='gold' stroke='purple' />}
       />
     </BarChart>
+    </ResponsiveContainer>
   )
 }

@@ -2,10 +2,8 @@ import { Layout } from '@/components/custom/layout'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent } from '@/components/ui/tabs'
 import ThemeSwitch from '@/components/theme-switch'
-
 import BarChartStats from './components/overview'
 import PieChartStats from './components/pieChart2'
-
 import {
   Select,
   SelectContent,
@@ -13,8 +11,47 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+// import { TopNav } from '@/components/top-nav'
+// import { UserNav } from '@/components/user-nav'
+// import { RecentSales } from './components/recent-sales'
+import { Overview } from './components/overview'
+import PieChartStats from './components/pieChart'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+interface Resp {
+  user:string,
+  date:string,
+  english:string,
+  arabish:string,
+  arabic:string,
+  id:number
 
+
+}
+const getData = async () =>{
+ return  await axios.get("http://10.70.0.48:8001/stats")
+}
 export default function Dashboard() {
+  const [data, setData] = useState<Resp[]>([])
+  const [start, setStart] = useState("")
+  const [end, setEnd] = useState("")
+  const [filteredData, setfilteredData] = useState<Resp[]>([])
+  const handleFilterData = () =>{
+    const startDate = new Date(start);
+    const endDate = new Date(end); 
+  const newFilteredData = data.filter(entry => {
+    const entryDate = new Date(entry.date.split('-').reverse().join('-'));
+return entryDate >= startDate && entryDate <= endDate;
+});
+setfilteredData(newFilteredData);
+  }
+  useEffect(() => {
+    getData().then((res)=>{
+      setData(res.data[0])
+    })
+   start !== "" && handleFilterData();
+  }, [start,end])
+  
   return (
     <Layout>
       {/* ===== Top Heading ===== */}
@@ -27,6 +64,26 @@ export default function Dashboard() {
 
       {/* ===== Main ===== */}
       <Layout.Body>
+        <div className='mb-2 flex items-center justify-between space-y-2'>
+          <h1 className='text-2xl font-bold tracking-tight'>Dashboard</h1>
+          {/* <div className='flex items-center space-x-2'>
+            <Button>Download</Button>
+          </div> */}
+          <div className='flex space-x-10'>
+            <div className='flex space-x-2 align-middle items-center'><p>Start :</p>
+            <input type='date' onChange={(e)=>{
+              setStart(e.target.value);
+              
+            }} className=' text-black px-4 py-2 rounded-lg font-semibold' id='start' />
+            </div>
+            <div className='flex space-x-2 align-middle items-center'><p>End :</p>
+            <input type='date' onChange={(e)=>{
+              setEnd(e.target.value);
+            }} className=' text-black px-4 py-2 rounded-lg font-semibold' id='end' />
+            </div>
+          </div>
+        </div>
+
         <Tabs
           orientation='vertical'
           defaultValue='overview'
@@ -54,7 +111,7 @@ export default function Dashboard() {
                   </svg>
                 </CardHeader>
                 <CardContent>
-                  <div className='text-2xl font-bold'>10,231,089</div>
+                  <div className='text-2xl font-bold'>{data.length}</div>
                   <p className='text-xs text-muted-foreground'>
                     +5.1% from yesterday
                   </p>
@@ -107,7 +164,7 @@ export default function Dashboard() {
                   </svg>
                 </CardHeader>
                 <CardContent>
-                  <div className='text-2xl font-bold'>+12,234</div>
+                  <div className='text-2xl font-bold'>{data.length - 428}</div>
                   <p className='text-xs text-muted-foreground'>
                     +19% from last month
                   </p>
@@ -159,15 +216,20 @@ export default function Dashboard() {
                     </SelectContent>
                   </Select>
                 </CardHeader>
-                <CardContent className='flex items-center justify-center  pl-2'>
-                  <BarChartStats />
+
+                <CardContent className='flex items-center justify-center pl-2'>
+                  {start && end && <Overview myData={filteredData} />}
                 </CardContent>
               </Card>
 
               {/* Pie chart */}
-              <div className='col-span-1  lg:col-span-3'>
-                <PieChartStats />
-              </div>
+
+              <Card className='col-span-1 lg:col-span-3'>
+                <CardContent className='flex items-center justify-center pl-2'>
+                  <PieChartStats myData={data} start={start} end={end} />
+                </CardContent>
+              </Card>
+
 
               {/* RecentSales */}
               {/* <Card className='col-span-1 lg:col-span-3'>
