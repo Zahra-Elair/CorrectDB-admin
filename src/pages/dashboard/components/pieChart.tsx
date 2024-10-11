@@ -110,11 +110,15 @@ const onMouseEnter = useCallback((_: number, index: number) => {
           data={pieData}
           cx='50%'
           cy='50%'
+          innerRadius={90}
+          outerRadius={130}
           labelLine={false}
           label={renderCustomizedLabel}
           fill='#8884d8'
           dataKey='value'
           onMouseEnter={onMouseEnter}
+          strokeWidth={1}
+          paddingAngle={5}
         >
           {pieData && pieData.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />

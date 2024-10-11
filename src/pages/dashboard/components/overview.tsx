@@ -1,5 +1,15 @@
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts'
-
+// import "./styles.css";
+// import React from "react";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  // Legend,
+  Rectangle,
+} from 'recharts'
 
 interface Resp {
   user:string,
@@ -13,8 +23,8 @@ interface Resp {
 interface myProps{
   myData: Resp[]
 }
+
 export function Overview(myData:myProps) {
-  console.log(myData.myData)
   const data = [
     {
       name: 'Moez',
@@ -51,34 +61,32 @@ export function Overview(myData:myProps) {
   ]
   return (
     <ResponsiveContainer width='100%' height={350}>
-      <BarChart data={data}>
-        <XAxis
-          dataKey='name'
-          stroke='#888888'
-          fontSize={12}
-          tickLine={false}
-          axisLine={false}
-        />
-        <YAxis
-          stroke='#888888'
-          fontSize={12}
-          tickLine={false}
-          axisLine={false}
-          tickFormatter={(value) => `${value}`}
-        />
-         <Bar
-      dataKey='totalA'
-      fill='#8884d8'
-      radius={[4, 4, 0, 0]}
-      barSize={20}  
-    />
-    <Bar
-      dataKey='totalB'
-      fill='#82ca9d'
-      radius={[4, 4, 0, 0]}
-      barSize={20}  
-    />
-      </BarChart>
+      <BarChart
+      width={800}
+      height={400}
+      data={data}
+      margin={{
+        top: 5,
+        right: 30,
+        left: 20,
+        bottom: 5,
+      }}
+    >
+      <CartesianGrid strokeDasharray='3 3' />
+      <XAxis dataKey='date' />
+      <YAxis />
+      <Tooltip />
+      <Bar
+        dataKey='totalA'
+        fill='#F95454'
+        activeBar={<Rectangle fill='pink' stroke='blue' />}
+      />
+      <Bar
+        dataKey='TotalB'
+        fill='#0D92F4'
+        activeBar={<Rectangle fill='gold' stroke='purple' />}
+      />
+    </BarChart>
     </ResponsiveContainer>
   )
 }

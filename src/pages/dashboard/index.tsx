@@ -1,15 +1,16 @@
 import { Layout } from '@/components/custom/layout'
-// import { Button } from '@/components/custom/button'
-import {
-  Card,
-  CardContent,
-  // CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-// import { Search } from '@/components/search'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent } from '@/components/ui/tabs'
 import ThemeSwitch from '@/components/theme-switch'
+import BarChartStats from './components/overview'
+import PieChartStats from './components/pieChart2'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 // import { TopNav } from '@/components/top-nav'
 // import { UserNav } from '@/components/user-nav'
 // import { RecentSales } from './components/recent-sales'
@@ -24,6 +25,7 @@ interface Resp {
   arabish:string,
   arabic:string,
   id:number
+
 
 }
 const getData = async () =>{
@@ -54,11 +56,9 @@ setfilteredData(newFilteredData);
     <Layout>
       {/* ===== Top Heading ===== */}
       <Layout.Header>
-        {/* <TopNav links={topNav} /> */}
-        <div className='ml-auto flex items-center space-x-4'>
-          {/* <Search /> */}
+        <div className='ml-auto flex w-full items-center justify-between space-x-4'>
+          <h1 className='  text-2xl font-bold tracking-tight'>Dashboard</h1>
           <ThemeSwitch />
-          {/* <UserNav /> */}
         </div>
       </Layout.Header>
 
@@ -83,19 +83,12 @@ setfilteredData(newFilteredData);
             </div>
           </div>
         </div>
+
         <Tabs
           orientation='vertical'
           defaultValue='overview'
           className='space-y-4'
         >
-          {/* <div className='w-full overflow-x-auto pb-2'>
-            <TabsList>
-              <TabsTrigger value='overview'>Overview</TabsTrigger>
-              <TabsTrigger value='analytics'>Analytics</TabsTrigger>
-              <TabsTrigger value='reports'>Reports</TabsTrigger>
-              <TabsTrigger value='notifications'>Notifications</TabsTrigger>
-            </TabsList>
-          </div> */}
           <TabsContent value='overview' className='space-y-4'>
             {/* Cards */}
             <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
@@ -203,26 +196,40 @@ setfilteredData(newFilteredData);
                 </CardContent>
               </Card>
             </div>
-            <div className='grid grid-cols-1 gap-4 lg:grid-cols-7'>
+            {/* charts */}
+            <div className='grid grid-cols-1 gap-4  lg:grid-cols-7'>
               {/* Overview: Bar chart */}
-              <Card className='col-span-1 lg:col-span-4'>
-                <CardHeader>
-                  <CardTitle>Overview</CardTitle>
+              <Card className='col-span-1  lg:col-span-4'>
+                <CardHeader className='flex flex-row items-center justify-between'>
+                  <CardTitle>User Overview</CardTitle>
+                  <Select>
+                    <SelectTrigger className='w-[180px]'>
+                      <SelectValue placeholder='User' />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value='Moez'>Moez</SelectItem>
+                      <SelectItem value='Borhen'>Borhen</SelectItem>
+                      <SelectItem value='Oussema'>Oussema</SelectItem>
+                      <SelectItem value='Zahra'>Zahra</SelectItem>
+                      <SelectItem value='Nour'>Nour</SelectItem>
+                      <SelectItem value='Seif'>Seif</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </CardHeader>
+
                 <CardContent className='flex items-center justify-center pl-2'>
                   {start && end && <Overview myData={filteredData} />}
                 </CardContent>
               </Card>
 
               {/* Pie chart */}
+
               <Card className='col-span-1 lg:col-span-3'>
-                <CardHeader>
-                  <CardTitle>Rows Corrected Today</CardTitle>
-                </CardHeader>
                 <CardContent className='flex items-center justify-center pl-2'>
                   <PieChartStats myData={data} start={start} end={end} />
                 </CardContent>
               </Card>
+
 
               {/* RecentSales */}
               {/* <Card className='col-span-1 lg:col-span-3'>
@@ -243,26 +250,3 @@ setfilteredData(newFilteredData);
     </Layout>
   )
 }
-
-// const topNav = [
-//   {
-//     title: 'Overview',
-//     href: 'dashboard/overview',
-//     isActive: true,
-//   },
-//   {
-//     title: 'Customers',
-//     href: 'dashboard/customers',
-//     isActive: false,
-//   },
-//   {
-//     title: 'Products',
-//     href: 'dashboard/products',
-//     isActive: false,
-//   },
-//   {
-//     title: 'Settings',
-//     href: 'dashboard/settings',
-//     isActive: false,
-//   },
-// ]
