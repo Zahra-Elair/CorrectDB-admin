@@ -1,57 +1,54 @@
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts'
 
-const data = [
-  {
-    name: 'Jan',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Feb',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Mar',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Apr',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'May',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Jun',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Jul',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Aug',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Sep',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Oct',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Nov',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Dec',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-]
 
-export function Overview() {
+interface Resp {
+  user:string,
+  date:string,
+  english:string,
+  arabish:string,
+  arabic:string,
+  id:number
+  
+}
+interface myProps{
+  myData: Resp[]
+}
+export function Overview(myData:myProps) {
+  console.log(myData.myData)
+  const data = [
+    {
+      name: 'Moez',
+      totalA: myData.myData.filter(entry => entry.user === 'moez').length,
+      totalB: myData.myData.filter(entry => entry.user === 'moez').length - 15 * Math.random()
+    },
+    {
+      name: 'Oussema',
+      totalA: myData.myData.filter(entry => entry.user === 'oussema').length,
+      totalB: myData.myData.filter(entry => entry.user === 'oussema').length - 15 * Math.random()
+      ,
+    },
+    {
+      name: 'Nour',
+      totalA: myData.myData.filter(entry => entry.user === 'nour').length,
+      totalB: myData.myData.filter(entry => entry.user === 'nour').length - 15 * Math.random(),
+    },
+    {
+      name: 'Salah',
+      totalA: myData.myData.filter(entry => entry.user === 'salah').length,
+      totalB: myData.myData.filter(entry => entry.user === 'salah').length - 15 * Math.random(),
+    },
+    {
+      name: 'Zahra',
+      totalA: myData.myData.filter(entry => entry.user === 'zahra').length,
+      totalB: myData.myData.filter(entry => entry.user === 'zahra').length - 15 * Math.random(),
+    },
+    {
+      name: 'Borhen',
+      totalA: myData.myData.filter(entry => entry.user === 'borhen').length,
+      totalB: myData.myData.filter(entry => entry.user === 'borhen').length - 15 * Math.random(),
+    },
+    
+  ]
   return (
     <ResponsiveContainer width='100%' height={350}>
       <BarChart data={data}>
@@ -67,14 +64,20 @@ export function Overview() {
           fontSize={12}
           tickLine={false}
           axisLine={false}
-          tickFormatter={(value) => `$${value}`}
+          tickFormatter={(value) => `${value}`}
         />
-        <Bar
-          dataKey='total'
-          fill='currentColor'
-          radius={[4, 4, 0, 0]}
-          className='fill-primary'
-        />
+         <Bar
+      dataKey='totalA'
+      fill='#8884d8'
+      radius={[4, 4, 0, 0]}
+      barSize={20}  
+    />
+    <Bar
+      dataKey='totalB'
+      fill='#82ca9d'
+      radius={[4, 4, 0, 0]}
+      barSize={20}  
+    />
       </BarChart>
     </ResponsiveContainer>
   )

@@ -15,8 +15,41 @@ import ThemeSwitch from '@/components/theme-switch'
 // import { RecentSales } from './components/recent-sales'
 import { Overview } from './components/overview'
 import PieChartStats from './components/pieChart'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+interface Resp {
+  user:string,
+  date:string,
+  english:string,
+  arabish:string,
+  arabic:string,
+  id:number
 
+}
+const getData = async () =>{
+ return  await axios.get("http://10.70.0.48:8001/stats")
+}
 export default function Dashboard() {
+  const [data, setData] = useState<Resp[]>([])
+  const [start, setStart] = useState("")
+  const [end, setEnd] = useState("")
+  const [filteredData, setfilteredData] = useState<Resp[]>([])
+  const handleFilterData = () =>{
+    const startDate = new Date(start);
+    const endDate = new Date(end); 
+  const newFilteredData = data.filter(entry => {
+    const entryDate = new Date(entry.date.split('-').reverse().join('-'));
+return entryDate >= startDate && entryDate <= endDate;
+});
+setfilteredData(newFilteredData);
+  }
+  useEffect(() => {
+    getData().then((res)=>{
+      setData(res.data[0])
+    })
+   start !== "" && handleFilterData();
+  }, [start,end])
+  
   return (
     <Layout>
       {/* ===== Top Heading ===== */}
@@ -36,6 +69,19 @@ export default function Dashboard() {
           {/* <div className='flex items-center space-x-2'>
             <Button>Download</Button>
           </div> */}
+          <div className='flex space-x-10'>
+            <div className='flex space-x-2 align-middle items-center'><p>Start :</p>
+            <input type='date' onChange={(e)=>{
+              setStart(e.target.value);
+              
+            }} className=' text-black px-4 py-2 rounded-lg font-semibold' id='start' />
+            </div>
+            <div className='flex space-x-2 align-middle items-center'><p>End :</p>
+            <input type='date' onChange={(e)=>{
+              setEnd(e.target.value);
+            }} className=' text-black px-4 py-2 rounded-lg font-semibold' id='end' />
+            </div>
+          </div>
         </div>
         <Tabs
           orientation='vertical'
@@ -72,7 +118,7 @@ export default function Dashboard() {
                   </svg>
                 </CardHeader>
                 <CardContent>
-                  <div className='text-2xl font-bold'>10,231,089</div>
+                  <div className='text-2xl font-bold'>{data.length}</div>
                   <p className='text-xs text-muted-foreground'>
                     +5.1% from yesterday
                   </p>
@@ -125,7 +171,7 @@ export default function Dashboard() {
                   </svg>
                 </CardHeader>
                 <CardContent>
-                  <div className='text-2xl font-bold'>+12,234</div>
+                  <div className='text-2xl font-bold'>{data.length - 428}</div>
                   <p className='text-xs text-muted-foreground'>
                     +19% from last month
                   </p>
@@ -164,7 +210,7 @@ export default function Dashboard() {
                   <CardTitle>Overview</CardTitle>
                 </CardHeader>
                 <CardContent className='flex items-center justify-center pl-2'>
-                  <Overview />
+                  {start && end && <Overview myData={filteredData} />}
                 </CardContent>
               </Card>
 
@@ -174,7 +220,7 @@ export default function Dashboard() {
                   <CardTitle>Rows Corrected Today</CardTitle>
                 </CardHeader>
                 <CardContent className='flex items-center justify-center pl-2'>
-                  <PieChartStats />
+                  <PieChartStats myData={data} start={start} end={end} />
                 </CardContent>
               </Card>
 
