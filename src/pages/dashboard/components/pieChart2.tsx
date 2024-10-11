@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import { TrendingUp } from 'lucide-react'
-import { Label, Pie, PieChart, Cell } from 'recharts'
+import { Label, Pie, PieChart, Cell, Legend } from 'recharts'
 
 import {
   Card,
@@ -73,14 +73,16 @@ export default function PieChartStats() {
   }, [])
 
   return (
-    <Card className='flex flex-col gap-0'>
+    <Card className='flex h-full w-full flex-col '>
       <CardHeader className='items-center pb-0'>
         <CardTitle>Team Performance Chart</CardTitle>
         <CardDescription>Individual Contributions</CardDescription>
       </CardHeader>
-      <CardContent className='flex-1 pb-0'>
-        <ChartContainer config={chartConfig} className='mx-auto aspect-square '>
-          <PieChart>
+      <CardContent className='flex-1  '>
+        <ChartContainer config={chartConfig} className=' 0  h-full w-full '>
+          <PieChart className=' flex items-center justify-center'>
+            <Legend align='center' verticalAlign='bottom' />
+
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
@@ -92,7 +94,7 @@ export default function PieChartStats() {
               innerRadius={100}
               outerRadius={130}
               strokeWidth={5}
-              paddingAngle={5}
+              paddingAngle={3}
             >
               {data.map((entry, index) => (
                 <Cell
@@ -133,7 +135,7 @@ export default function PieChartStats() {
           </PieChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className='flex-col gap-2 text-sm'>
+      {/* <CardFooter className='flex-col gap-2 text-sm'>
         <div className='flex items-center gap-2 font-medium leading-none'>
           Team performance up by 8.3% this quarter{' '}
           <TrendingUp className='h-4 w-4' />
@@ -141,7 +143,7 @@ export default function PieChartStats() {
         <div className='leading-none text-muted-foreground'>
           Showing individual contributions to the team's total value
         </div>
-      </CardFooter>
+      </CardFooter> */}
     </Card>
   )
 }
