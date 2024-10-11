@@ -8,7 +8,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
@@ -19,7 +18,6 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart'
 import { useState } from 'react'
-
 
 const COLORS = [
   '#0088FE',
@@ -61,61 +59,79 @@ const chartConfig = {
 } satisfies ChartConfig
 
 interface Resp {
-  user:string,
-  date:string,
-  english:string,
-  arabish:string,
-  arabic:string,
-  id:number
-  
+  user: string
+  date: string
+  english: string
+  arabish: string
+  arabic: string
+  id: number
 }
-interface DataType{
-  myData:Resp[],
-  start:string,
-  end:string
+interface DataType {
+  myData: Resp[]
+  start: string
+  end: string
 }
 
-export default function PieChartStats(myData:DataType) {
-const [filteredData, setFilteredData] = useState<Resp[]>([])
-  const [pieData, setPieData] = useState<{name:string,value:number}[]>( [ { name: 'Moez', value: 0 },
+export default function PieChartStats(myData: DataType) {
+  const [filteredData, setFilteredData] = useState<Resp[]>([])
+  const [pieData, setPieData] = useState<{ name: string; value: number }[]>([
+    { name: 'Moez', value: 0 },
     { name: 'Borhen', value: 0 },
     { name: 'Oussema', value: 0 },
     { name: 'Zahra', value: 0 },
     { name: 'Nour', value: 0 },
-    { name: 'Seif', value: 0 }])
-const counterFunc = () =>{
-  
-  const startDate = new Date(myData.start);
-  const endDate = new Date(myData.end); 
-  const filteredData = myData.myData.filter(entry => {
-    const entryDate = new Date(entry.date.split('-').reverse().join('-'));
-return entryDate >= startDate && entryDate <= endDate;
-});
-setFilteredData(filteredData)
+    { name: 'Seif', value: 0 },
+  ])
+  const counterFunc = () => {
+    const startDate = new Date(myData.start)
+    const endDate = new Date(myData.end)
+    const filteredData = myData.myData.filter((entry) => {
+      const entryDate = new Date(entry.date.split('-').reverse().join('-'))
+      return entryDate >= startDate && entryDate <= endDate
+    })
+    setFilteredData(filteredData)
 
-const countOussema = filteredData.filter(entry => entry.user === 'oussema').length;
-const countzahra = filteredData.filter(entry => entry.user === 'zahra').length;
-const countmoez = filteredData.filter(entry => entry.user === 'moez').length;
-const countborhen = filteredData.filter(entry => entry.user === 'borhen').length;
-const countnour = filteredData.filter(entry => entry.user === 'nour').length;
-const countsalah = filteredData.filter(entry => entry.user === 'salah').length;
-setPieData([{name:"oussema",value:countOussema},{name:"moez",value:countmoez},{name:"zahra",value:countzahra},{name:"borhen",value:countborhen},{name:"salah",value:countsalah},{name:"nour",value:countnour}])
-}
-React.useEffect(() => {
-console.log(myData.myData)
-counterFunc();
-}, [myData.myData])
-  
-  
+    const countOussema = filteredData.filter(
+      (entry) => entry.user === 'oussema'
+    ).length
+    const countzahra = filteredData.filter(
+      (entry) => entry.user === 'zahra'
+    ).length
+    const countmoez = filteredData.filter(
+      (entry) => entry.user === 'moez'
+    ).length
+    const countborhen = filteredData.filter(
+      (entry) => entry.user === 'borhen'
+    ).length
+    const countnour = filteredData.filter(
+      (entry) => entry.user === 'nour'
+    ).length
+    const countsalah = filteredData.filter(
+      (entry) => entry.user === 'salah'
+    ).length
+    setPieData([
+      { name: 'oussema', value: countOussema },
+      { name: 'moez', value: countmoez },
+      { name: 'zahra', value: countzahra },
+      { name: 'borhen', value: countborhen },
+      { name: 'salah', value: countsalah },
+      { name: 'nour', value: countnour },
+    ])
+  }
+  React.useEffect(() => {
+    console.log(myData.myData)
+    counterFunc()
+  }, [myData.myData])
+
   return (
-    <Card className='flex h-full w-full flex-col '>
-      <CardHeader className='items-center pb-0'>
+    <Card className='flex h-full flex-col '>
+      <CardHeader className='flex items-center justify-center '>
         <CardTitle>Team Performance Chart</CardTitle>
         <CardDescription>Individual Contributions</CardDescription>
       </CardHeader>
-      <CardContent className='flex-1  '>
-        <ChartContainer config={chartConfig} className=' 0  h-full w-full '>
-          <PieChart className=' flex items-center justify-center'>
+      <CardContent className='h-full'>
+        <ChartContainer config={chartConfig} className='  h-[350px] w-full '>
+          <PieChart>
             <Legend align='center' verticalAlign='bottom' />
 
             <ChartTooltip
@@ -126,8 +142,8 @@ counterFunc();
               data={pieData}
               dataKey='value'
               nameKey='name'
-              innerRadius={100}
-              outerRadius={130}
+              innerRadius={80}
+              outerRadius={110}
               strokeWidth={5}
               paddingAngle={3}
             >
@@ -152,7 +168,7 @@ counterFunc();
                           y={viewBox.cy}
                           className='fill-foreground text-3xl font-bold'
                         >
-                         {filteredData.length}
+                          {filteredData.length}
                         </tspan>
                         <tspan
                           x={viewBox.cx}
@@ -170,15 +186,6 @@ counterFunc();
           </PieChart>
         </ChartContainer>
       </CardContent>
-      {/* <CardFooter className='flex-col gap-2 text-sm'>
-        <div className='flex items-center gap-2 font-medium leading-none'>
-          Team performance up by 8.3% this quarter{' '}
-          <TrendingUp className='h-4 w-4' />
-        </div>
-        <div className='leading-none text-muted-foreground'>
-          Showing individual contributions to the team's total value
-        </div>
-      </CardFooter> */}
     </Card>
   )
 }

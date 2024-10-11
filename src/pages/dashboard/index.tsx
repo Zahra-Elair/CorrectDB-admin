@@ -18,71 +18,88 @@ import { Overview } from './components/overview'
 // import PieChartStats from './components/pieChart'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import { DatePickerWithRange } from './components/datePicker'
 interface Resp {
-  user:string,
-  date:string,
-  english:string,
-  arabish:string,
-  arabic:string,
-  id:number
-
-
+  user: string
+  date: string
+  english: string
+  arabish: string
+  arabic: string
+  id: number
 }
-const getData = async () =>{
- return  await axios.get("http://10.70.0.48:8001/stats")
+const getData = async () => {
+  return await axios.get('http://10.70.0.48:8001/stats')
 }
 export default function Dashboard() {
+  const today = new Date()
+  const todatDateFormat =
+    today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
   const [data, setData] = useState<Resp[]>([])
-  const [start, setStart] = useState("")
-  const [end, setEnd] = useState("")
+  const [start, setStart] = useState(todatDateFormat)
+  const [end, setEnd] = useState(todatDateFormat)
   const [filteredData, setfilteredData] = useState<Resp[]>([])
-  const handleFilterData = () =>{
-    const startDate = new Date(start);
-    const endDate = new Date(end); 
-  const newFilteredData = data.filter(entry => {
-    const entryDate = new Date(entry.date.split('-').reverse().join('-'));
-return entryDate >= startDate && entryDate <= endDate;
-});
-setfilteredData(newFilteredData);
+
+  const handleFilterData = () => {
+    const startDate = new Date(start)
+    const endDate = new Date(end)
+    const newFilteredData = data.filter((entry) => {
+      const entryDate = new Date(entry.date.split('-').reverse().join('-'))
+      return entryDate >= startDate && entryDate <= endDate
+    })
+    setfilteredData(newFilteredData)
   }
+
   useEffect(() => {
-    getData().then((res)=>{
+    getData().then((res) => {
       setData(res.data[0])
     })
-   start !== "" && handleFilterData();
-  }, [start,end])
-  
+    start !== '' && handleFilterData()
+  }, [start, end])
+
   return (
     <Layout>
       {/* ===== Top Heading ===== */}
       <Layout.Header>
-        <div className='ml-auto flex w-full items-center justify-between space-x-4'>
-          <h1 className='  text-2xl font-bold tracking-tight'>Dashboard</h1>
+        <div className='flex w-full items-center justify-between '>
+          <h1 className='text-2xl font-bold '>Dashboard</h1>
           <ThemeSwitch />
         </div>
       </Layout.Header>
 
       {/* ===== Main ===== */}
       <Layout.Body>
-        <div className='mb-2 flex items-center justify-between space-y-2'>
-          <h1 className='text-2xl font-bold tracking-tight'>Dashboard</h1>
-          {/* <div className='flex items-center space-x-2'>
-            <Button>Download</Button>
-          </div> */}
-          <div className='flex space-x-10'>
-            <div className='flex space-x-2 align-middle items-center'><p>Start :</p>
-            <input type='date' onChange={(e)=>{
-              setStart(e.target.value);
-              
-            }} className=' text-black px-4 py-2 rounded-lg font-semibold' id='start' />
-            </div>
-            <div className='flex space-x-2 align-middle items-center'><p>End :</p>
-            <input type='date' onChange={(e)=>{
-              setEnd(e.target.value);
-            }} className=' text-black px-4 py-2 rounded-lg font-semibold' id='end' />
-            </div>
+        <DatePickerWithRange
+          className={'mb-4 flex items-center justify-end'}
+          setStart={setStart}
+          setEnd={setEnd}
+        />
+        {/* date picker */}
+        {/* <div className='mb-4 flex items-center justify-end space-x-10'>
+          <div className='flex items-center space-x-2 align-middle'>
+            <p>Start :</p>
+            <input
+              type='date'
+              onChange={(e) => {
+                setStart(e.target.value)
+                console.log(start)
+              }}
+              className=' rounded-lg px-4 py-2 font-semibold text-black'
+              id='start'
+            />
           </div>
-        </div>
+          <div className='flex items-center space-x-2 align-middle'>
+            <p>End :</p>
+            <input
+              type='date'
+              onChange={(e) => {
+                setEnd(e.target.value)
+                console.log(end)
+              }}
+              className=' rounded-lg px-4 py-2 font-semibold text-black'
+              id='end'
+            />
+          </div>
+        </div> */}
 
         <Tabs
           orientation='vertical'
@@ -224,12 +241,9 @@ setfilteredData(newFilteredData);
 
               {/* Pie chart */}
 
-              <Card className='col-span-1 lg:col-span-3'>
-                <CardContent className='flex items-center justify-center pl-2'>
-                  <PieChartStats myData={data} start={start} end={end}  />
-                </CardContent>
-              </Card>
-
+              <div className='col-span-1   lg:col-span-3'>
+                <PieChartStats myData={data} start={start} end={end} />
+              </div>
 
               {/* RecentSales */}
               {/* <Card className='col-span-1 lg:col-span-3'>
