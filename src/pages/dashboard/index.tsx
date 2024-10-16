@@ -216,10 +216,10 @@ export default function Dashboard() {
             {/* charts */}
             <div className='grid grid-cols-1 gap-4  lg:grid-cols-7'>
               {/* Overview: Bar chart */}
-              <Card className='col-span-1  lg:col-span-4'>
+              <Card className='col-span-1  lg:col-span-4 '>
                 <CardHeader className='flex flex-row items-center justify-between'>
                   <CardTitle>User Overview</CardTitle>
-                  <Select>
+                  {/* <Select>
                     <SelectTrigger className='w-[180px]'>
                       <SelectValue placeholder='User' />
                     </SelectTrigger>
@@ -231,10 +231,10 @@ export default function Dashboard() {
                       <SelectItem value='Nour'>Nour</SelectItem>
                       <SelectItem value='Seif'>Seif</SelectItem>
                     </SelectContent>
-                  </Select>
+                  </Select> */}
                 </CardHeader>
 
-                <CardContent className='flex items-center justify-center pl-2'>
+                <CardContent className='flex items-center justify-center pl-2 pt-7'>
                   {start && end && <Overview myData={filteredData} />}
                 </CardContent>
               </Card>

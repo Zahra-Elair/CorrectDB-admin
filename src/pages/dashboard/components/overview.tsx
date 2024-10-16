@@ -35,10 +35,26 @@ export function Overview(myData: myProps) {
       date: '10-09-2024',
     },
     {
+      name: 'Borhen',
+      totalA: myData.myData.filter((entry) => entry.user === 'borhen').length,
+      totalB:
+        myData.myData.filter((entry) => entry.user === 'borhen').length +
+        15 * Math.random(),
+      date: '10-09-2024',
+    },
+    {
       name: 'Oussema',
       totalA: myData.myData.filter((entry) => entry.user === 'oussema').length,
       totalB:
         myData.myData.filter((entry) => entry.user === 'oussema').length +
+        15 * Math.random(),
+      date: '10-09-2024',
+    },
+    {
+      name: 'Zahra',
+      totalA: myData.myData.filter((entry) => entry.user === 'zahra').length,
+      totalB:
+        myData.myData.filter((entry) => entry.user === 'zahra').length +
         15 * Math.random(),
       date: '10-09-2024',
     },
@@ -58,22 +74,6 @@ export function Overview(myData: myProps) {
         15 * Math.random(),
       date: '10-09-2024',
     },
-    {
-      name: 'Zahra',
-      totalA: myData.myData.filter((entry) => entry.user === 'zahra').length,
-      totalB:
-        myData.myData.filter((entry) => entry.user === 'zahra').length +
-        15 * Math.random(),
-      date: '10-09-2024',
-    },
-    {
-      name: 'Borhen',
-      totalA: myData.myData.filter((entry) => entry.user === 'borhen').length,
-      totalB:
-        myData.myData.filter((entry) => entry.user === 'borhen').length +
-        15 * Math.random(),
-      date: '10-09-2024',
-    },
   ]
   return (
     <ResponsiveContainer width='100%' height={350}>
@@ -89,7 +89,7 @@ export function Overview(myData: myProps) {
         }}
       >
         <CartesianGrid strokeDasharray='3 3' />
-        <XAxis dataKey='date' />
+        <XAxis dataKey='name' />
         <YAxis />
         <Tooltip />
         <Bar
