@@ -30,43 +30,49 @@ export function Overview(myData: myProps) {
       name: 'Moez',
       totalA: myData.myData.filter((entry) => entry.user === 'moez').length,
       totalB:
-        myData.myData.filter((entry) => entry.user === 'moez').length -
+        myData.myData.filter((entry) => entry.user === 'moez').length +
         15 * Math.random(),
+      date: '10-09-2024',
     },
     {
       name: 'Oussema',
       totalA: myData.myData.filter((entry) => entry.user === 'oussema').length,
       totalB:
-        myData.myData.filter((entry) => entry.user === 'oussema').length -
+        myData.myData.filter((entry) => entry.user === 'oussema').length +
         15 * Math.random(),
+      date: '10-09-2024',
     },
     {
       name: 'Nour',
       totalA: myData.myData.filter((entry) => entry.user === 'nour').length,
       totalB:
-        myData.myData.filter((entry) => entry.user === 'nour').length -
+        myData.myData.filter((entry) => entry.user === 'nour').length +
         15 * Math.random(),
+      date: '10-09-2024',
     },
     {
       name: 'Salah',
       totalA: myData.myData.filter((entry) => entry.user === 'salah').length,
       totalB:
-        myData.myData.filter((entry) => entry.user === 'salah').length -
+        myData.myData.filter((entry) => entry.user === 'salah').length +
         15 * Math.random(),
+      date: '10-09-2024',
     },
     {
       name: 'Zahra',
       totalA: myData.myData.filter((entry) => entry.user === 'zahra').length,
       totalB:
-        myData.myData.filter((entry) => entry.user === 'zahra').length -
+        myData.myData.filter((entry) => entry.user === 'zahra').length +
         15 * Math.random(),
+      date: '10-09-2024',
     },
     {
       name: 'Borhen',
       totalA: myData.myData.filter((entry) => entry.user === 'borhen').length,
       totalB:
-        myData.myData.filter((entry) => entry.user === 'borhen').length -
+        myData.myData.filter((entry) => entry.user === 'borhen').length +
         15 * Math.random(),
+      date: '10-09-2024',
     },
   ]
   return (

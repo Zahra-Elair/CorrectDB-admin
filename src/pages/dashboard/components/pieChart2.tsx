@@ -94,28 +94,28 @@ export default function PieChartStats(myData: DataType) {
     const countOussema = filteredData.filter(
       (entry) => entry.user === 'oussema'
     ).length
-    const countzahra = filteredData.filter(
+    const countZahra = filteredData.filter(
       (entry) => entry.user === 'zahra'
     ).length
-    const countmoez = filteredData.filter(
+    const countMoez = filteredData.filter(
       (entry) => entry.user === 'moez'
     ).length
-    const countborhen = filteredData.filter(
+    const countBorhen = filteredData.filter(
       (entry) => entry.user === 'borhen'
     ).length
-    const countnour = filteredData.filter(
+    const countNour = filteredData.filter(
       (entry) => entry.user === 'nour'
     ).length
-    const countsalah = filteredData.filter(
+    const countSeif = filteredData.filter(
       (entry) => entry.user === 'salah'
     ).length
     setPieData([
-      { name: 'oussema', value: countOussema },
-      { name: 'moez', value: countmoez },
-      { name: 'zahra', value: countzahra },
-      { name: 'borhen', value: countborhen },
-      { name: 'salah', value: countsalah },
-      { name: 'nour', value: countnour },
+      { name: 'Moez', value: countMoez },
+      { name: 'Borhen', value: countBorhen },
+      { name: 'Oussema', value: countOussema },
+      { name: 'Zahra', value: countZahra },
+      { name: 'Nour', value: countNour },
+      { name: 'Seif', value: countSeif },
     ])
   }
   React.useEffect(() => {
